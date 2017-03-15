@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<link rel="stylesheet" href="task7_ui.css"/>
+<body>
+<div>
+    <span>依次输入：</br>姓名，语文分数，数学分数，英语分数，总分。</br>如下：</br>小明：90 90 90 180；</br>提提买：90 90 90 180；</br></span>
+    <textarea class="data"></textarea><button class="confirm">确定</button>
+</div>
+    <table class="form hidden" id="form" border="1" cellspacing="0" cellpadding="1">
+        <tr><th>姓名</th><th>语文<span class="icon"><img class='up subject1' src="images/up_arrow.png"/><img class='down subject1' src="images/down_arrow.png"/></span> </th><th>数学<span class="icon"><img class='up subject2' src="images/up_arrow.png"/><img class='down subject2' src="images/down_arrow.png"/></span></th><th>英语<span class="icon"><img class='up subject3' src="images/up_arrow.png"/><img class='down subject3' src="images/down_arrow.png"/></span></th><th>总分<span class="icon"><img class='up subject4' src="images/up_arrow.png"/><img class='down subject4' src="images/down_arrow.png"/></span></th></tr>
+    </table>
+<script src="http://code.jquery.com/jquery-latest.js"></script>
+<script>
+   var data=$('.data').val().split(/;\s|；\s|;|；/);
+
+//提交数据并动态创建表格
+    $('.confirm').click(function () {
+        var i,
+                j,
+                m,
+                row,
+                cell,
+                totalScore;
+        $('.form').removeClass('hidden');
+        for(i=0,j=data.length;i<j;i++){
+            if(i==(j-1)&&data[i].length<5){
+                data.splice(i,1);
+                j--;
+                break;
+            }
+            row=$('.form').get(0).insertRow();
+            data[i]=data[i].split(/:|：|\s/);
+            m=data[i].length;
+            for(n=0;n<m;n++){
+                cell=row.insertCell();
+                $('.form')[0].rows[i+1].cells[n].innerHTML=data[i][n];
+            }
+            totalScore=0;
+            for(n=1;n<m-1;n++){
+                data[i][n]=parseInt(data[i][n]);
+                totalScore+=data[i][n];
+            }
+            if(totalScore!=data[i][n]){
+                alert('请检查第'+(i+2)+'行'+data[i][0]+'的分数！')
+            }
+        }
+    })
+//   排序
+    function reorder(j,re){
+        var i,
+                l,
+                temp,
+                m,
+                n;
+        l=data.length;
+        if(re===0) {
+            for (m = 0, n = data.length; m < n; m++) {
+                for (i = 0; i < l - 1; i++) {
+                    if ($('.form')[0].rows[i + 1].cells[j].innerHTML < $('.form')[0].rows[i + 2].cells[j].innerHTML) {
+                        temp = $('.form')[0].rows[i + 1].innerHTML;
+                        $('.form')[0].rows[i + 1].innerHTML = $('.form')[0].rows[i + 2].innerHTML;
+                        $('.form')[0].rows[i + 2].innerHTML = temp;
+                    }
+
+                }
+                l--;
+            }
+        }
+        else {
+            for (m = 0, n = data.length; m < n; m++) {
+                for (i = 0; i < l - 1; i++) {
+                    if ($('.form')[0].rows[i + 1].cells[j].innerHTML > $('.form')[0].rows[i + 2].cells[j].innerHTML) {
+                        temp = $('.form')[0].rows[i + 1].innerHTML;
+                        $('.form')[0].rows[i + 1].innerHTML = $('.form')[0].rows[i + 2].innerHTML;
+                        $('.form')[0].rows[i + 2].innerHTML = temp;
+                    }
+                }
+            }
+        }
+    }
+
+//   给每个排序标志的排序函数赋予相应的参数
+    for(var i= 0,l=$('th img').length;i<l;i++) {
+        (function(i) {
+            $('th img').eq(i).click(function () {
+                reorder(parseInt((i+2)/2),(i+2)%2);
+            })
+        })(i)
+    }
+</script>
+</body>
+</html>

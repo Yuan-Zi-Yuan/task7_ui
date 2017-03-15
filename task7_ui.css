@@ -1,0 +1,17 @@
+td{
+    text-align:center;;
+}
+th{
+    vertical-align: middle;
+}
+.icon{
+    display:inline-block;
+    width:20px;
+    vertical-align: middle;
+}
+.up,.down{
+    width:15px;
+}
+.hidden{
+    display: none;
+}

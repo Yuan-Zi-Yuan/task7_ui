@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+    <script src="http://code.jquery.com/jquery-latest.js"></script>
+    <script>
+        $(document).ready(function(){
+            var temp=10;
+            for(var i=0;i<5;i++){
+                (function (i) {
+                    $('tr').eq(0).click(function () {
+                        console.log(i);
+                        console.log(temp);
+                    })
+                })(i);
+            }
+            temp=20;
+        });
+        function changeContent()
+        {
+            var x=document.getElementById('myTable').rows[0].cells;
+            x[0].innerHTML="NEW CONTENT";
+        }
+    </script>
+<body>
+<table id="myTable" border="1">
+    <tr>
+        <td>Row1 cell1</td>
+        <td>Row1 cell2</td>
+    </tr>
+    <tr>
+        <td>Row2 cell1</td>
+        <td>Row2 cell2</td>
+    </tr>
+    <tr>
+        <td>Row3 cell1</td>
+        <td>Row3 cell2</td>
+    </tr>
+</table>
+<form>
+    <input type="button" onclick="changeContent()" value="Change content">
+</form>
+</body>
+</html>
+3 5 2 7 8
+5 3 7 8 2
+5 7 8 3 2
